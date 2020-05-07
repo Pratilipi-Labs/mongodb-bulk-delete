@@ -26,7 +26,7 @@ bulkDelete.initialise();
 ```
 Connected successfully to server
 Getting total documents...
-Total Documents matching query: 100
+Total Documents matching query: 300
 33.33% completed
 66.66% completed
 100% completed
