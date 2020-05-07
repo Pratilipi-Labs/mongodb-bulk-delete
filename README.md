@@ -1,15 +1,17 @@
 # mongodb-bulk-delete
 
-  
-
 A configurable tool to delete records in bulk while in control. 
+
+## Installation
+
+``` js
+> npm i mongodb-bulk-delete
+```
 
 ## Usage  
 
 ``` js
-
 const  bulkDelete  =  require('mongodb-bulk-delete');
-
 bulkDelete.configure({
 	uri: 'mongodb://localhost:27017',
 	db: 'test',
@@ -17,7 +19,6 @@ bulkDelete.configure({
 	query: { userId: { $gt: 100 } },
 	removalBatchSize: 100
 });  
-
 bulkDelete.initialise();  
 ```
 
@@ -30,4 +31,3 @@ The following options are configurable:
 | `collection` || Collection name|
 | `query`  || query object|
 | `removalBatchSize` | `1000`                      | Number of documents deleted in a batch|
--------------------------------------------------------
