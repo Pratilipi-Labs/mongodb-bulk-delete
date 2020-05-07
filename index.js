@@ -1,5 +1,6 @@
 const assert = require('assert');
 const readline = require('readline');
+const logger = require('./logger');
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -47,7 +48,7 @@ const deleteBatch = (db, batch) => new Promise((resolve, reject) => {
 
 const getClient = () => new Promise((resolve, reject) => {
   MongoClient.connect(config.uri, { useUnifiedTopology: true }, function(err, client) {
-    console.log("Connected successfully to server\n");
+    logger("Connected successfully to server\n");
     if (err) {
       resolve(err);
       return;
@@ -99,9 +100,9 @@ const initialise = async () => {
     const client = await getClient();
     const db = client.db(config.db);
 
-    console.log('Getting total documents...');
+    logger('Getting total documents...');
     const total = await getTotalDocuments(db);
-    console.log(`Total Documents matching query: ${total}\n`);
+    logger(`Total Documents matching query: ${total}\n`);
 
     let batchNumber = 1;
     let documentsDeleted = 0;
@@ -113,9 +114,8 @@ const initialise = async () => {
       printProgress(`Documents Deleted: ${documentsDeleted} \t Progress: ${Math.min(getStatus(total, batchNumber++), 100)}%\t`);
       if (batch.length < config.removalBatchSize) break;
     }
-    console.log('\n');
 
-    console.log('Successfully completed!');
+    logger('\nSuccessfully completed!');
     client.close();
 
     return {
@@ -124,7 +124,7 @@ const initialise = async () => {
     }
 
   } catch (error) {
-    console.log(error);
+    logger(error);
     return null;
   }
 }
