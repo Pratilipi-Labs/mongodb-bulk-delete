@@ -1,9 +1,14 @@
 const MongoClient = require('mongodb').MongoClient;
 
-let config;
+let config = {
+  uri: 'mongodb://localhost:27017',
+  removalBatchSize: 1000
+}
 
 const configure = (configs) => {
+  console.log(config);
   config = { ...configs };
+  console.log(config);
 }
 
 const getBatch = (db) => new Promise((resolve, reject) => {
