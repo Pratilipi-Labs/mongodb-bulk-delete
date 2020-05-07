@@ -46,7 +46,7 @@ const deleteBatch = (db, batch) => new Promise((resolve, reject) => {
 
 const getClient = () => new Promise((resolve, reject) => {
   MongoClient.connect(config.uri, { useUnifiedTopology: true }, function(err, client) {
-    console.log("Connected successfully to server");
+    console.log("Connected successfully to server\n");
     if (err) {
       resolve(err);
       return;
@@ -69,6 +69,11 @@ const getTotalDocuments = (db) => new Promise((resolve, reject) => {
 
 const getStatus = (total, batchNumber) => ((batchNumber * config.removalBatchSize * 100) / total).toFixed(2);
 
+const printProgress = (message) => {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(message);
+}
 
 const initialise = async () => {
   try {
@@ -77,22 +82,22 @@ const initialise = async () => {
 
     console.log('Getting total documents...');
     const total = await getTotalDocuments(db);
-    console.log(`Total Documents matching query: ${total}`);
-    let batchNumber = 1;
+    console.log(`Total Documents matching query: ${total}\n`);
 
+    let batchNumber = 1;
     while(true) {
       const batch = await getBatch(db);
       await deleteBatch(db, batch);
-      console.log(`${Math.min(getStatus(total, batchNumber++), 100)}% completed`);
+      printProgress(`Documents Deleted: ${(batchNumber - 1)*config.removalBatchSize + batch.length } \t Progress: ${Math.min(getStatus(total, batchNumber++), 100)}%`);
       if (batch.length < config.removalBatchSize) break;
     }
+    console.log('\n');
 
-    console.log('Successfully completed!')
+    console.log('Successfully completed!');
     client.close();
-    process.exit(0);
   } catch (error) {
     console.log(error);
-    process.exit(1);
+    client.close();
   }
 }
 
