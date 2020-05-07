@@ -1,4 +1,5 @@
 const assert = require('assert');
+const readline = require('readline');
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -70,8 +71,8 @@ const getTotalDocuments = (db) => new Promise((resolve, reject) => {
 const getStatus = (total, batchNumber) => ((batchNumber * config.removalBatchSize * 100) / total).toFixed(2);
 
 const printProgress = (message) => {
-  process.stdout.clearLine();
-  process.stdout.cursorTo(0);
+  readline.clearLine(process.stdout);
+  readline.cursorTo(process.stdout, 0);
   process.stdout.write(message);
 }
 
