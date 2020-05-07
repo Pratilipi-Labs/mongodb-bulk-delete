@@ -1,6 +1,6 @@
 {
   "name": "mongodb-bulk-delete",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A tool to delete large number of records from mongodb",
   "main": "index.js",
   "dependencies": {
@@ -10,6 +10,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "mongodb",
+    "bulk-delete",
+    "database",
+    "batch"
+  ],
   "author": "Avinash Bhardwaj",
   "license": "MIT"
 }
