@@ -97,7 +97,6 @@ const initialise = async () => {
     client.close();
   } catch (error) {
     console.log(error);
-    client.close();
   }
 }
 
