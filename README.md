@@ -22,6 +22,17 @@ bulkDelete.configure({
 bulkDelete.initialise();  
 ```
 
+## Example Output
+```
+Connected successfully to server
+Getting total documents...
+Total Documents matching query: 100
+33.33% completed
+66.66% completed
+100% completed
+Successfully completed!
+```
+
 The following options are configurable:
 
 | Name          | Default                     |  Description    |
