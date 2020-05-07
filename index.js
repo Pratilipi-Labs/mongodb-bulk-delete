@@ -76,6 +76,24 @@ const printProgress = (message) => {
   process.stdout.write(message);
 }
 
+const convertMS = (milliseconds) => {
+  let hour;
+  let minute;
+  let seconds;
+  seconds = Math.floor(milliseconds / 1000);
+  minute = Math.floor(seconds / 60);
+  seconds = seconds % 60;
+  hour = Math.floor(minute / 60);
+  minute = minute % 60;
+  hour = hour % 24;
+
+  let message = '';
+  if (hour > 0) message += `${hour}h `
+  if (minute > 0) message += `${minute}m `
+  if (seconds > 0) message += `${seconds}s`
+  return message;
+}
+
 const initialise = async () => {
   try {
     const client = await getClient();
@@ -86,18 +104,28 @@ const initialise = async () => {
     console.log(`Total Documents matching query: ${total}\n`);
 
     let batchNumber = 1;
+    let documentsDeleted = 0;
+    const startTime = Date.now();
     while(true) {
       const batch = await getBatch(db);
       await deleteBatch(db, batch);
-      printProgress(`Documents Deleted: ${(batchNumber - 1)*config.removalBatchSize + batch.length } \t Progress: ${Math.min(getStatus(total, batchNumber++), 100)}%`);
+      documentsDeleted += batch.length;
+      printProgress(`Documents Deleted: ${documentsDeleted} \t Progress: ${Math.min(getStatus(total, batchNumber++), 100)}%`);
       if (batch.length < config.removalBatchSize) break;
     }
     console.log('\n');
 
     console.log('Successfully completed!');
     client.close();
+
+    return {
+      documentsDeleted,
+      timeTaken: convertMS(Date.now() - startTime)
+    }
+
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
 
