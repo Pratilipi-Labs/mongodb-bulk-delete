@@ -1,3 +1,5 @@
+const assert = require('assert');
+
 const MongoClient = require('mongodb').MongoClient;
 
 let config = {
@@ -6,9 +8,13 @@ let config = {
 }
 
 const configure = (configs) => {
-  console.log(config);
+  assert.equal(typeof configs.uri, 'string', 'mongodb uri missing or in wrong format');
+  assert.equal(typeof configs.db, 'string', 'db name missing or in wrong format');
+  assert.equal(typeof configs.collection, 'string', 'collection name missing or in wrong format');
+  assert.equal(typeof configs.removalBatchSize, 'number', 'removal batch size missing or in wrong format');
+  assert.equal(typeof configs.query, 'object', 'query missing or in wrong format');
+
   config = { ...configs };
-  console.log(config);
 }
 
 const getBatch = (db) => new Promise((resolve, reject) => {
