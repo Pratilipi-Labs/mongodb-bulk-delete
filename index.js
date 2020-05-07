@@ -110,7 +110,7 @@ const initialise = async () => {
       const batch = await getBatch(db);
       await deleteBatch(db, batch);
       documentsDeleted += batch.length;
-      printProgress(`Documents Deleted: ${documentsDeleted} \t Progress: ${Math.min(getStatus(total, batchNumber++), 100)}%`);
+      printProgress(`Documents Deleted: ${documentsDeleted} \t Progress: ${Math.min(getStatus(total, batchNumber++), 100)}%\t`);
       if (batch.length < config.removalBatchSize) break;
     }
     console.log('\n');

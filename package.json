@@ -1,6 +1,6 @@
 {
   "name": "mongodb-bulk-delete",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A tool to delete large number of records from mongodb",
   "main": "index.js",
   "dependencies": {
