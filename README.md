@@ -28,23 +28,23 @@ const  bulkDelete  =  require('mongodb-bulk-delete');
 
 bulkDelete.configure({
 
-uri: 'mongodb://localhost:27017',
+	uri: 'mongodb://localhost:27017',
 
-db: 'test',
+	db: 'test',
 
-collection: 'user',
+	collection: 'user',
 
-query: { userId: { $gt: 100 } },
+	query: { userId: { $gt: 100 } },
 
-removalBatchSize: 100
+	removalBatchSize: 100
 
 });
 
 (async () => {
 
-const  result  =  await  bulkDelete.initialise();
+	const  result  =  await  bulkDelete.initialise();
 
-console.log(result);
+	console.log(result);
 
 })();
 
